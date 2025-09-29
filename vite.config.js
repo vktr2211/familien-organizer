@@ -7,41 +7,20 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/api\.qrserver\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'qr-code-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days
-              }
-            }
-          }
-        ]
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
         name: 'Familien-Organizer',
         short_name: 'Familie',
-        description: 'Aufgaben und To-Dos für die ganze Familie organisieren mit Spracheingabe',
+        description: 'Aufgaben für die ganze Familie',
         theme_color: '#3b82f6',
         background_color: '#ffffff',
         display: 'standalone',
-        orientation: 'portrait',
-        scope: '/',
         start_url: '/',
-        categories: ['productivity', 'lifestyle'],
-        lang: 'de-DE',
+        lang: 'de',
         icons: [
-          {
-            src: 'pwa-64x64.png',
-            sizes: '64x64',
-            type: 'image/png'
-          },
           {
             src: 'pwa-192x192.png',
             sizes: '192x192',
@@ -50,46 +29,19 @@ export default defineConfig({
           {
             src: 'pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
+            type: 'image/png'
           },
           {
-            src: 'maskable-icon-512x512.png',
+            src: 'pwa-maskable-512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'maskable'
-          }
-        ],
-        screenshots: [
-          {
-            src: 'screenshot-narrow.png',
-            sizes: '390x844',
-            type: 'image/png',
-            form_factor: 'narrow'
-          },
-          {
-            src: 'screenshot-wide.png', 
-            sizes: '1024x768',
-            type: 'image/png',
-            form_factor: 'wide'
+            purpose: 'any maskable'
           }
         ]
       }
     })
   ],
   server: {
-    host: true,
-    port: 3000
-  },
-  build: {
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          icons: ['lucide-react']
-        }
-      }
-    }
+    host: true
   }
 })
